@@ -9,14 +9,39 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.andriamparivonyschubert.henripotierapp.databinding.ActivityMainBinding
+import com.andriamparivonyschubert.henripotierapp.viewmodel.BookViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var bookViewModel: BookViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        bookViewModel = ViewModelProvider.AndroidViewModelFactory(this.application)
+            .create(BookViewModel::class.java)
+
+        bookViewModel.state.observe(this) { state ->
+            Toast.makeText(
+                this@MainActivity,
+                "${state.books.size} books | isLoading ${state.isLoading}",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        }
+        bookViewModel.loadBooks()
+    }
+
+  /*  override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -54,5 +79,5 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
-    }
+    }*/
 }
