@@ -1,9 +1,10 @@
-package com.andriamparivonyschubert.henripotierapp.model
+package com.andriamparivonyschubert.henripotierapp.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.andriamparivonyschubert.henripotierapp.data.CartItemRepo
+import com.andriamparivonyschubert.henripotierapp.model.CartItem
 
 class CartItemViewModel(application: Application): AndroidViewModel(application) {
     private val allCartItems: LiveData<List<CartItem>>
